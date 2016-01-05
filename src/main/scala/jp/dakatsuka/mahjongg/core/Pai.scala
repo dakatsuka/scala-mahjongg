@@ -50,6 +50,10 @@ object Pai {
   val yaochuhai = rotohai ::: jihai
   val all = suhai ::: jihai
 
+  val suhaiCount = suhai.length
+  val jihaiCount = jihai.length
+  val paiToalCount = suhaiCount + jihaiCount
+
   def isManz(pai: Pai): Boolean = manz.contains(pai)
   def isPinz(pai: Pai): Boolean = pinz.contains(pai)
   def isSouz(pai: Pai): Boolean = souz.contains(pai)
