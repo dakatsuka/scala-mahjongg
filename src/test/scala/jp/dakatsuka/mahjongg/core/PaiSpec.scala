@@ -81,4 +81,15 @@ class PaiSpec extends PropSpec with PropertyChecks with MustMatchers {
     forAll(Gen.oneOf("M1", "M2", "M3", "Haku")) { s => Pai.fromStringOption(s) mustBe a [Some[_]] }
     forAll {s: String => Pai.fromStringOption(s) mustBe None }
   }
+
+  property("makeShuntsuOrdering") {
+    import Pai._
+    forAll(Gen.oneOf(M1, M2, M3, M4, M5, M6, M7)) { p =>
+      Pai.makeShuntsu(p).length mustBe 3
+    }
+
+    forAll(Gen.oneOf(M8, M9, S8, S9, P8, P9, Ton, Nan, Sha, Pei, Haku, Hatsu, Chun)) { p =>
+      Pai.makeShuntsu(p).length mustBe 0
+    }
+  }
 }
