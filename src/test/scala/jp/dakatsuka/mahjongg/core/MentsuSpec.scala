@@ -1,6 +1,6 @@
 package jp.dakatsuka.mahjongg.core
 
-import jp.dakatsuka.mahjongg.core.Mentsu.{Kantsu, Kotsu, Shuntsu, Atama}
+import jp.dakatsuka.mahjongg.core._
 import org.scalacheck.Gen
 import org.scalatest.{MustMatchers, PropSpec}
 import org.scalatest.prop.PropertyChecks

@@ -83,7 +83,6 @@ class PaiSpec extends PropSpec with PropertyChecks with MustMatchers {
   }
 
   property("makeShuntsuOrdering") {
-    import Pai._
     forAll(Gen.oneOf(M1, M2, M3, M4, M5, M6, M7)) { p =>
       Pai.makeShuntsu(p).length mustBe 3
     }
