@@ -79,10 +79,22 @@ object Pai {
   def fromStringOption(value: String): Option[Pai] =
     all.toVector.find(_.toString == value)
 
+  def fromIndexOption(index :Int): Option[Pai] =
+    all.toVector.find(_.index == index)
+
   def makeShuntsu(pai: Pai): List[Pai] = getPaiFamily(pai) match {
     case Manz if pai < M8 => manz.filter(_.index >= pai.index).take(3)
     case Pinz if pai < P8 => pinz.filter(_.index >= pai.index).take(3)
     case Souz if pai < S8 => souz.filter(_.index >= pai.index).take(3)
     case _ => Nil
+  }
+
+  def succ(pai: Pai): Option[Pai] = pai match {
+    case M9 => Some(M1)
+    case P9 => Some(P1)
+    case S9 => Some(S1)
+    case Pei => Some(Ton)
+    case Chun => Some(Haku)
+    case _ => fromIndexOption(pai.index + 1)
   }
 }

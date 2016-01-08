@@ -18,6 +18,8 @@ class PaiSpec extends PropSpec with PropertyChecks with MustMatchers {
   lazy val genNotYaochuhai: Gen[Pai] = Gen.oneOf(Pai.all.filterNot(p => Pai.yaochuhai.contains(p)))
   lazy val genNotGeeenhai: Gen[Pai] = Gen.oneOf(Pai.all.filterNot(p => Pai.greenhai.contains(p)))
 
+  lazy val genAllhai: Gen[Pai] = Gen.oneOf(Pai.all)
+
   property("isManz") {
     forAll(genManz) { p => Pai.isManz(p) mustBe true  }
     forAll(genPinz) { p => Pai.isManz(p) mustBe false }
@@ -82,6 +84,11 @@ class PaiSpec extends PropSpec with PropertyChecks with MustMatchers {
     forAll {s: String => Pai.fromStringOption(s) mustBe None }
   }
 
+  property("fromIndexOption") {
+    forAll(Gen.choose(0, 33)) { i => Pai.fromIndexOption(i) mustBe a [Some[_]] }
+    forAll(Gen.choose(34, 100)) { i => Pai.fromIndexOption(i) mustBe None }
+  }
+
   property("makeShuntsuOrdering") {
     forAll(Gen.oneOf(M1, M2, M3, M4, M5, M6, M7)) { p =>
       Pai.makeShuntsu(p).length mustBe 3
@@ -90,5 +97,14 @@ class PaiSpec extends PropSpec with PropertyChecks with MustMatchers {
     forAll(Gen.oneOf(M8, M9, S8, S9, P8, P9, Ton, Nan, Sha, Pei, Haku, Hatsu, Chun)) { p =>
       Pai.makeShuntsu(p).length mustBe 0
     }
+  }
+
+  property("succ") {
+    forAll(Gen.const(M9))   { p => Pai.succ(p) mustEqual Some(M1) }
+    forAll(Gen.const(P9))   { p => Pai.succ(p) mustEqual Some(P1) }
+    forAll(Gen.const(S9))   { p => Pai.succ(p) mustEqual Some(S1) }
+    forAll(Gen.const(Pei))  { p => Pai.succ(p) mustEqual Some(Ton) }
+    forAll(Gen.const(Chun)) { p => Pai.succ(p) mustEqual Some(Haku) }
+    forAll(genAllhai)       { p => Pai.succ(p) mustBe a [Option[_]] }
   }
 }
